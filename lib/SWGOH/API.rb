@@ -54,6 +54,7 @@ module SWGOH
     private
 
     module PATH
+      # frozen_string_literal: true
       AUTH_SIGNIN = 'auth/signin'
       PLAYER = 'swgoh/player'
       GUILD = 'swgoh/guild'
