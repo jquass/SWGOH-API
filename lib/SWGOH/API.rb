@@ -2,7 +2,6 @@ require 'SWGOH/API/version'
 require 'http'
 require 'json'
 
-
 module SWGOH
   module API
     class Error < StandardError; end
