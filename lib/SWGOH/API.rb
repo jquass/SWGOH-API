@@ -51,6 +51,45 @@ module SWGOH
       return request(PATH::BATTLES, ally_codes)
     end
 
+    def self.get_data(collection, match)
+      return request_data(collection, match)
+    end
+
+    module COLLECTION
+      ABILITY_LIST = 'abilityList'
+      BATTLE_ENVIRONMENTS_LIST = 'battleEnvironmentsList'
+      BATTLE_TARGETING_RUL_LIST = 'battleTargetingRuleList'
+      CATEGORY_LIST = 'categoryList'
+      CHANNELENGE_LIST = 'challengeList'
+      CHANNELGE_STYLE_LIST = 'challengeStyleList'
+      # effectList
+      # environmentCollectionList
+      # equipmentList
+      # eventSamplingList
+      # guildExchangeItemList
+      # guildRaidList
+      # helpEntryList
+      # materialList
+      # playerTitleList
+      # powerUpBundleList
+      # raidConfigList
+      # recipeList
+      # requirementList
+      # skillList
+      # starterGuildList
+      # statModList
+      # statModSetList
+      # statProgressionList
+      # tableList
+      # targetingSetList
+      # territoryBattleDefinitionList
+      # territoryWarDefinitionList
+      # unitsList
+      # unlockAnnouncementDefinitionList
+      # warDefinitionList
+      # xpTableList
+    end
+
     private
 
     module PATH
@@ -65,6 +104,7 @@ module SWGOH
       EVENTS = 'swgoh/events'
       BATTLES = 'swgoh/battles'
       REGISTRATION = 'registration'
+      DATA = 'swgoh/data'
     end
 
     @base_path = 'https://api.swgoh.help/'
@@ -75,6 +115,15 @@ module SWGOH
       raise Error, 'empty access_token' if @access_token == nil
       response = HTTP.auth("Bearer " + @access_token)
                      .post(@base_path + path, form: {
+                         allycodes: ally_codes,
+                     })
+      return JSON.parse(response)
+    end
+
+    def self.request_data(collection, match)
+      raise Error, 'empty access_token' if @access_token == nil
+      response = HTTP.auth("Bearer " + @access_token)
+                     .post(@base_path + PATH::DATA, form: {
                          allycodes: ally_codes,
                      })
       return JSON.parse(response)
