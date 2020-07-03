@@ -37,14 +37,26 @@ SWGOH::API.get_players([ally_code_1, ally_code_2])
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+To install this gem onto your local machine, run `bundle exec rake install`. 
+
+To test in irb, run `irb -rubygems`
+```
+$ irb -rubygems           
+irb(main):001:0> require 'swgoh/api'
+=> true
+irb(main):002:0> SWGOH::API.auth('username', 'password')
+=> nil
+irb(main):003:0> SWGOH::API.get_players('123456789')
+=> {...}
+```
+
+To release a new version, update the version number in `version.rb`, commit your changes in git, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/jquass/SWGOH-API. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/jquass/SWGOH-API/blob/master/CODE_OF_CONDUCT.md).
-
 
 ## License
 
