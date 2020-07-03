@@ -7,24 +7,6 @@ module SWGOH
   module API
     class Error < StandardError; end
 
-    module PATH
-      AUTH_SIGNIN = 'auth/signin'
-      PLAYER = 'swgoh/player'
-      GUILD = 'swgoh/guild'
-      UNITS = 'swgoh/units'
-      ROSTER = 'swgoh/roster'
-      DATA = 'swgoh/data'
-      ZETAS = 'swgoh/zetas'
-      SQUADS = 'swgoh/squads'
-      EVENTS = 'swgoh/events'
-      BATTLES = 'swgoh/battles'
-      REGISTRATION = 'registration'
-    end
-
-    @base_path = 'https://api.swgoh.help/'
-
-    @access_token
-
     def self.auth(username, password)
       response = HTTP.post(@base_path + PATH::AUTH_SIGNIN, form: {
           username: username,
@@ -71,7 +53,26 @@ module SWGOH
 
     private
 
+    module PATH
+      AUTH_SIGNIN = 'auth/signin'
+      PLAYER = 'swgoh/player'
+      GUILD = 'swgoh/guild'
+      UNITS = 'swgoh/units'
+      ROSTER = 'swgoh/roster'
+      DATA = 'swgoh/data'
+      ZETAS = 'swgoh/zetas'
+      SQUADS = 'swgoh/squads'
+      EVENTS = 'swgoh/events'
+      BATTLES = 'swgoh/battles'
+      REGISTRATION = 'registration'
+    end
+
+    @base_path = 'https://api.swgoh.help/'
+
+    @access_token = nil
+
     def self.request(path, ally_codes)
+      raise Error, 'empty access_token' if @access_token == nil
       response = HTTP.auth("Bearer " + @access_token)
                      .post(@base_path + path, form: {
                          allycodes: ally_codes,
