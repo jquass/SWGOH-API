@@ -3,11 +3,9 @@ require 'http'
 require 'json'
 
 module SWGOH
-  # Wrapper around api.swgoh.help
+  # The API module supports the client
   module API
     class Error < StandardError; end
-
-    ally_code_error = SWGOH::API::Error('Parameter ally_codes must be Array')
 
     module PATH
       # frozen_string_literal: true

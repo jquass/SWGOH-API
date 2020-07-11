@@ -25,14 +25,18 @@ Or install it yourself as:
 # Require the gem
 require 'swgoh/api'
 
-# Authenticate
-SWGOH::API.auth('username', 'password')
+# Create a new client
+client = CLIENT.new
+
+# Two ways to authenticate the client
+access_token = client.authorize("username", "password")
+
+client.access_token = access_token
 
 # Start making requests
-ally_code_1 = 111111111
-ally_code_2 = 222222222
+ally_code = 123456789
 
-SWGOH::API.get_players([ally_code_1, ally_code_2])
+json = client.get_players([ally_code])
 ```
 
 ## Development
@@ -46,9 +50,9 @@ To test in irb, run `irb -rubygems`.
     $ irb -rubygems
     irb(main):001:0> require 'swgoh/api'
     => true
-    irb(main):002:0> SWGOH::API.auth('username', 'password')
+    irb(main):002:0> client.authorize("username", "password")
     => true
-    irb(main):003:0> SWGOH::API.get_players('123456789')
+    irb(main):003:0> client.get_players([123456789])
     => {...}
 
 To release a new version, update the version number in `version.rb`, commit your changes in git, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
