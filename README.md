@@ -1,8 +1,5 @@
-# SWGOH::API
+# SWGOH::API [![Gem Version](https://badge.fury.io/rb/SWGOH-API.svg)](https://badge.fury.io/rb/SWGOH-API)
 Ruby client wrapper for the API at https://api.swgoh.help .
-
-## Ruby Gem
-https://rubygems.org/gems/SWGOH-API
 
 ### Installation
 
