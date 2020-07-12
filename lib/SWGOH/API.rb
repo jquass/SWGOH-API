@@ -1,6 +1,4 @@
-require 'SWGOH/API/version'
-require 'http'
-require 'json'
+# frozen_string_literal: true
 
 module SWGOH
   # The API module supports the client
@@ -8,7 +6,6 @@ module SWGOH
     class Error < StandardError; end
 
     module PATH
-      # frozen_string_literal: true
       BASE = 'https://api.swgoh.help/'
       AUTH_SIGNIN = 'auth/signin'
       PLAYER = 'swgoh/player'
@@ -24,7 +21,6 @@ module SWGOH
     end
 
     module LANGUAGE
-      # frozen_string_literal: true
       CHS_CN = 'CHS_CN'
       CHT_CN = 'CHT_CN'
       ENG_US = 'ENG_US'
@@ -40,6 +36,5 @@ module SWGOH
       THA_TH = 'THA_TH'
       TUR_TR = 'TUR_TR'
     end
-
   end
 end

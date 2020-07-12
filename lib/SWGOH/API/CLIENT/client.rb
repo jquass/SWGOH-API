@@ -1,4 +1,4 @@
-# frozen_string_literal: tru
+# frozen_string_literal: true
 
 require 'SWGOH/API'
 
@@ -8,7 +8,7 @@ class CLIENT
   attr_writer :access_token
 
   def initialize
-    @language = ::LANGUAGE::ENG_US
+    @language = ::SWGOH::API::LANGUAGE::ENG_US
     @enums = false
     @structure = false
     @access_token = nil
@@ -16,17 +16,19 @@ class CLIENT
 
   # @return [Boolean]
   def authorized?
-    @access_token.nil?
+    !@access_token.nil?
   end
+
+  @authorize_param_validation = ->(u, p) { u.is_a?(String) && p.is_a?(String) }
 
   # @param [String] username
   # @param [String] password
-  # @return [String]
+  # @return [String | nil]
   def authorize(username, password)
-    throw ::Error unless password.is_a?(String) && username.is_a?(String)
+    return nil unless @authorize_param_validation.call(username, password)
 
-    response = HTTP.post(::PATH::BASE + ::PATH::AUTH_SIGNIN,
-                         form: {
+    path = ::SWGOH::API::PATH::BASE + ::SWGOH::API::PATH::AUTH_SIGNIN
+    response = HTTP.post(path, form: {
                            username: username,
                            password: password,
                            grant_type: 'password',
@@ -39,49 +41,49 @@ class CLIENT
   # @param [Array] ally_codes
   # @return [JSON || nil]
   def get_players(ally_codes)
-    request(::PATH::PLAYER, ally_codes)
+    request(::SWGOH::API::PATH::PLAYER, ally_codes)
   end
 
   # @param [Array] ally_codes
   # @return [JSON || nil]
   def get_guilds(ally_codes)
-    request(::PATH::GUILD, ally_codes)
+    request(::SWGOH::API::PATH::GUILD, ally_codes)
   end
 
   # @param [Array] ally_codes
   # @return [JSON || nil]
   def get_rosters(ally_codes)
-    request(::PATH::ROSTER, ally_codes)
+    request(::SWGOH::API::PATH::ROSTER, ally_codes)
   end
 
   # @param [Array] ally_codes
   # @return [JSON || nil]
   def get_units(ally_codes)
-    request(::PATH::UNITS, ally_codes)
+    request(::SWGOH::API::PATH::UNITS, ally_codes)
   end
 
   # @param [Array] ally_codes
   # @return [JSON || nil]
   def get_zetas(ally_codes)
-    request(::PATH::ZETAS, ally_codes)
+    request(::SWGOH::API::PATH::ZETAS, ally_codes)
   end
 
   # @param [Array] ally_codes
   # @return [JSON || nil]
   def get_squads(ally_codes)
-    request(::PATH::SQUADS, ally_codes)
+    request(::SWGOH::API::PATH::SQUADS, ally_codes)
   end
 
   # @param [Array] ally_codes
   # @return [JSON || nil]
   def get_events(ally_codes)
-    request(::PATH::EVENTS, ally_codes)
+    request(::SWGOH::API::PATH::EVENTS, ally_codes)
   end
 
   # @param [Array] ally_codes
   # @return [JSON || nil]
   def get_battles(ally_codes)
-    request(::PATH::BATTLES, ally_codes)
+    request(::SWGOH::API::PATH::BATTLES, ally_codes)
   end
 
   private
@@ -92,10 +94,10 @@ class CLIENT
   # @param [Array] ally_codes
   # @return [JSON || nil]
   def request(path, ally_codes)
-    throw ::Error unless authorized? && ally_codes.is_a?(Array)
+    return nil unless authorized? && ally_codes.is_a?(Array)
 
     response = HTTP.auth('Bearer ' + access_token)
-                   .post(::PATH::BASE + path,
+                   .post(::SWGOH::API::PATH::BASE + path,
                          form: {
                            allyCodes: ally_codes,
                            language: language,
@@ -104,5 +106,4 @@ class CLIENT
                          })
     JSON.parse(response)
   end
-
 end
