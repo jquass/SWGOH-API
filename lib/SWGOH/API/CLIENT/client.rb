@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'SWGOH/API'
+require 'http'
 
 # The CLIENT class makes requests to api.swgoh.api
 class CLIENT
@@ -19,13 +20,11 @@ class CLIENT
     !@access_token.nil?
   end
 
-  @authorize_param_validation = ->(u, p) { u.is_a?(String) && p.is_a?(String) }
-
   # @param [String] username
   # @param [String] password
   # @return [String | nil]
   def authorize(username, password)
-    return nil unless @authorize_param_validation.call(username, password)
+    return nil unless username.is_a?(String) && password.is_a?(String)
 
     path = ::SWGOH::API::PATH::BASE + ::SWGOH::API::PATH::AUTH_SIGNIN
     response = HTTP.post(path, form: {
@@ -35,7 +34,7 @@ class CLIENT
                            client_id: 123,
                            client_secret: 'abc'
                          })
-    this.access_token = JSON.parse(response)['access_token']
+    @access_token = JSON.parse(response)['access_token']
   end
 
   # @param [Array] ally_codes
