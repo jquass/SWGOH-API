@@ -1,0 +1,3 @@
+- v0.3.4 Add CHANGELOG.md
+- v0.3.3 Update README.md and various fixes 
+- v0.3.0 Make the client a configurable object

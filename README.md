@@ -13,7 +13,7 @@ And then execute:
 
     $ bundle install
 
-Or install it yourself as:
+Or install it directly with:
 
     $ gem install SWGOH-API
 
@@ -57,12 +57,16 @@ irb(main):005:0> client.authorized?
 => true
 ```
 
-To release a new version, update the version number in `version.rb`, run `gem build SWGOH-API.gemspec`, commit the changes, and then run `bundle exec rake release`. 
-That will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+To release a new version, update the version number in `version.rb`, run `gem build SWGOH-API.gemspec`, 
+commit the changes, and then run `bundle exec rake release`. 
+That will create a git tag for the version, push git commits and tags, and push the `.gem` file 
+to [rubygems.org](https://rubygems.org).
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/jquass/SWGOH-API. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/jquass/SWGOH-API/blob/master/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/jquass/SWGOH-API. 
+This project is intended to be a safe, welcoming space for collaboration, and contributors are 
+expected to adhere to the [code of conduct](https://github.com/jquass/SWGOH-API/blob/master/CODE_OF_CONDUCT.md).
 
 ## License
 
@@ -70,4 +74,5 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the SWGOH::API project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/jquass/SWGOH-API/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the SWGOH::API project's codebases, issue trackers, chat rooms and mailing lists 
+is expected to follow the [code of conduct](https://github.com/jquass/SWGOH-API/blob/master/CODE_OF_CONDUCT.md).
