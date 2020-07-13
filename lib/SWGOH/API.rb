@@ -7,7 +7,7 @@ module SWGOH
 
     module PATH
       BASE = 'https://api.swgoh.help/'
-      AUTH_SIGNIN = 'auth/signin'
+      AUTH_SIGN_IN = 'auth/signin'
       PLAYER = 'swgoh/player'
       GUILD = 'swgoh/guild'
       UNITS = 'swgoh/units'

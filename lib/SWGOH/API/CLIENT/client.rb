@@ -26,7 +26,7 @@ class CLIENT
   def authorize(username, password)
     return nil unless username.is_a?(String) && password.is_a?(String)
 
-    path = ::SWGOH::API::PATH::BASE + ::SWGOH::API::PATH::AUTH_SIGNIN
+    path = ::SWGOH::API::PATH::BASE + ::SWGOH::API::PATH::AUTH_SIGN_IN
     response = HTTP.post(path, form: {
                            username: username,
                            password: password,
