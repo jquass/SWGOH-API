@@ -9,13 +9,9 @@ Add this line to your application's Gemfile:
 gem 'SWGOH-API'
 ```
 
-And then execute:
+And then rake:
 
-    $ bundle install
-
-Or install it yourself as:
-
-    $ gem install SWGOH-API
+    $ bundle exec rake
 
 ## Usage
 ```ruby
@@ -25,15 +21,14 @@ require 'SWGOH/API/CLIENT/client'
 # Create a new client
 client = CLIENT.new
 
-# Two ways to authenticate the client
+# Generate a new access_token
 access_token = client.authorize("username", "password")
 
+# Or authenticate with a saved access_token
 client.access_token = access_token
 
-# Start making requests
-ally_code = 123456789
-
-json = client.get_players([ally_code])
+# Then start making requests
+json = client.get_players([123456789])
 ```
 
 ## Development
@@ -42,7 +37,7 @@ After checking out the repo, run `bin/setup` to install dependencies. Then, run 
 
 To install this gem onto your local machine, run `gem install 'SWGOH-API'`. 
 
-To test the client using `irb`, run this.
+### irb
 ```
 $ irb -rubygems               
 irb(main):001:0> require 'SWGOH/API/CLIENT/client'
@@ -57,8 +52,14 @@ irb(main):005:0> client.authorized?
 => true
 ```
 
-To release a new version, update the version number in `version.rb`, run `gem build SWGOH-API.gemspec`, commit the changes, and then run `bundle exec rake release`. 
-That will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+### Release
+These are the steps to create and tag a new version, push git commits and tags, and push the new gem version to [rubygems.org](https://rubygems.org).
+
+- Update the version number in `version.rb`
+- Run `gem build SWGOH-API.gemspec` 
+- Create a new version commit
+- Rollup the last `N` commits since a release `git rebase -i HEAD~N`
+- Release the new version `bundle exec rake release` 
 
 ## Contributing
 

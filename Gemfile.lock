@@ -1,19 +1,23 @@
 PATH
   remote: .
   specs:
-    SWGOH-API (0.3.3)
+    SWGOH-API (0.3.4)
 
 GEM
   remote: https://rubygems.org/
   specs:
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
+    crack (0.4.3)
+      safe_yaml (~> 1.0.0)
+    diff-lcs (1.4.4)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
     ffi (1.13.1)
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
       rake
+    hashdiff (1.0.1)
     http (4.4.1)
       addressable (~> 2.3)
       http-cookie (~> 1.0)
@@ -24,21 +28,37 @@ GEM
     http-form_data (2.3.0)
     http-parser (1.2.1)
       ffi-compiler (>= 1.0, < 2.0)
+    json (1.8.6)
     minitest (5.14.1)
     public_suffix (4.0.5)
     rake (12.3.3)
+    rspec-core (3.9.2)
+      rspec-support (~> 3.9.3)
+    rspec-expectations (3.9.2)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.9.0)
+    rspec-support (3.9.3)
+    safe_yaml (1.0.5)
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.7)
+    webmock (3.8.3)
+      addressable (>= 2.3.6)
+      crack (>= 0.3.2)
+      hashdiff (>= 0.4.0, < 2.0.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   SWGOH-API!
-  http (~> 4.1)
+  http (~> 4.4.1)
+  json (~> 1.8.6)
   minitest (~> 5.0)
   rake (~> 12.0)
+  rspec-core (~> 3.9.2)
+  rspec-expectations (~> 3.9.2)
+  webmock (~> 3.8.3)
 
 BUNDLED WITH
    2.1.4

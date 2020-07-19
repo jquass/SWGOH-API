@@ -6,7 +6,7 @@ module SWGOH
     class Error < StandardError; end
 
     module PATH
-      BASE = 'https://api.swgoh.help/'
+      BASE = 'api.swgoh.help'
       AUTH_SIGNIN = 'auth/signin'
       PLAYER = 'swgoh/player'
       GUILD = 'swgoh/guild'
