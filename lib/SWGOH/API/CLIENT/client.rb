@@ -91,7 +91,7 @@ class CLIENT
   def request(path, ally_codes)
     return unless authorized?
 
-    http = Net::HTTP.new(SWGOH::API::PATH::BASE, 443)
+    http = Net::HTTP.new(SWGOH::API::PATH::BASE)
     http.use_ssl = true
     res = http.post('/' + path, request_data(ally_codes), auth_headers)
     return unless res.is_a?(Net::HTTPSuccess)
