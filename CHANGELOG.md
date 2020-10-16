@@ -3,6 +3,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.8] - 2020-10-15
+### Changed
+- Use https when making requests to auth/signin
+
 ## [0.3.7] - 2020-08-22
 ### Changed
 - Updated the README to follow [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) by [@jquass](https://github.com/jquass)
