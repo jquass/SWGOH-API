@@ -4,7 +4,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 N/A
 
-## [0.3.16] - 2020-10-16
+## [0.3.17] - 2020-10-16
 ## Changed
 - Format ally code request bodies to json by [@jquass](https://github.com/jquass)
 
