@@ -2,6 +2,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## Changed
+- Fix how ally code request bodies are formatted
+- Fix CLIENT_REQUESTS_test
+- Fix API_test
 
 ## [0.3.12] - 20202-10-16
 ## Changed

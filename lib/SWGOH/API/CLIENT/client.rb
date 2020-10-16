@@ -113,11 +113,11 @@ class CLIENT
   end
 
   def request_data(ally_codes)
-    [
+    {
       allyCodes: ally_codes,
       language: language,
       enums: enums,
       structure: structure
-    ].to_s
+    }.to_s
   end
 end
