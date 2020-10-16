@@ -5,7 +5,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.3.8] - 2020-10-15
 ### Changed
-- Use https when making requests to auth/signin
+- Use https when making requests to auth/signin by [@jquass](https://github.com/jquass)
 
 ## [0.3.7] - 2020-08-22
 ### Changed
