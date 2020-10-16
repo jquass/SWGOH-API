@@ -3,6 +3,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.11] - 2020-10-16
+### Changed
+- Fixed bug setting port making ally code requests by [@jquass](https://github.com/jquass)
+
 ## [0.3.10] - 2020-10-16
 ### Changed
 - Fixed CLIENT_AUTH_test by [@jquass](https://github.com/jquass)
