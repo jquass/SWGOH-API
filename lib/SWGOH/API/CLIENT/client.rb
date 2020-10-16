@@ -26,7 +26,7 @@ class CLIENT
   # @return [String | nil]
   def authorize(username, password)
     form = auth_request_form(username, password)
-    path = "http://#{SWGOH::API::PATH::BASE}/#{SWGOH::API::PATH::AUTH_SIGNIN}"
+    path = "https://#{SWGOH::API::PATH::BASE}/#{SWGOH::API::PATH::AUTH_SIGNIN}"
     res = Net::HTTP.post_form(URI(path), form)
     return unless res.is_a?(Net::HTTPSuccess)
 
