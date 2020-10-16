@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    SWGOH-API (0.3.8)
+    SWGOH-API (0.3.10)
 
 GEM
   remote: https://rubygems.org/
