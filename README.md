@@ -55,9 +55,11 @@ irb(main):005:0> client.authorized?
 ### Release
 These are the steps to create and tag a new version, push git commits and tags, and push the new gem version to [rubygems.org](https://rubygems.org).
 
+- Update the CHANGELOG and assign version number
 - Update the version number in `version.rb`
-- Run `gem build SWGOH-API.gemspec` 
-- Create a new version commit
+- Run `gem build SWGOH-API.gemspec`
+- Run the release to generate all files `bundle exec rake release`  
+- Create a new version commit with all changes
 - Release the new version `bundle exec rake release` 
 
 ## Contributing
