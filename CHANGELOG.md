@@ -3,6 +3,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.9] - 2020-10-16
+### Changed
+- Fixed CLIENT_AUTH_test
+
 ## [0.3.8] - 2020-10-15
 ### Changed
 - Use https when making requests to auth/signin by [@jquass](https://github.com/jquass)
