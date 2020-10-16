@@ -17,7 +17,7 @@ class ClientAuthTest < Minitest::Test
 
   def test_it_authorizes
     client = CLIENT.new
-    WebMock.stub_request(:post, 'http://api.swgoh.help/auth/signin')
+    WebMock.stub_request(:post, 'https://api.swgoh.help/auth/signin')
            .with(body: body(USERNAME, PASSWORD), headers: headers)
            .to_return(status: 200, body: "{\"access_token\":\"#{TOKEN}\"}")
 
@@ -29,7 +29,7 @@ class ClientAuthTest < Minitest::Test
 
   def test_it_returns_nil_on_error
     client = CLIENT.new
-    WebMock.stub_request(:post, 'http://api.swgoh.help/auth/signin')
+    WebMock.stub_request(:post, 'https://api.swgoh.help/auth/signin')
            .with(body: body(USERNAME, PASSWORD), headers: headers)
            .to_return(status: 500, body: '')
 
