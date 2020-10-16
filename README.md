@@ -58,7 +58,6 @@ These are the steps to create and tag a new version, push git commits and tags, 
 - Update the version number in `version.rb`
 - Run `gem build SWGOH-API.gemspec` 
 - Create a new version commit
-- Rollup the last `N` commits since a release `git rebase -i HEAD~N`
 - Release the new version `bundle exec rake release` 
 
 ## Contributing
