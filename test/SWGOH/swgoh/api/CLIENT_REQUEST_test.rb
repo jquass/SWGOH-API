@@ -87,8 +87,8 @@ class ClientRequestTest < Minitest::Test
     client
   end
 
-  def request_body(ally_codes)
-    "[{:allyCodes=>#{ally_codes}, :language=>\"ENG_US\", :enums=>false, :structure=>false}]"
+  def request_body(_ally_codes)
+    '{:allyCodes=>["123456789"], :language=>"ENG_US", :enums=>false, :structure=>false}'
   end
 
   def request_headers
@@ -96,7 +96,8 @@ class ClientRequestTest < Minitest::Test
       'Accept' => '*/*',
       'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
       'Authorization' => 'Bearer access-token',
-      'User-Agent' => 'Ruby'
+      'User-Agent' => 'Ruby',
+      'Host' => 'api.swgoh.help'
     }
   end
 end
