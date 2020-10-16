@@ -76,7 +76,7 @@ class ClientRequestTest < Minitest::Test
   private
 
   def mock_request(path)
-    WebMock.stub_request(:post, 'http://api.swgoh.help/' + path)
+    WebMock.stub_request(:post, 'https://api.swgoh.help/' + path)
            .with(body: request_body(ALLY_CODES), headers: request_headers)
            .to_return(status: 200, body: RESPONSE_JSON, headers: {})
   end
