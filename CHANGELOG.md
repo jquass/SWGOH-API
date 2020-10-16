@@ -2,16 +2,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+N/A
+
+## [0.3.16] - 2020-10-16
 ## Changed
 - Format ally code request bodies to json by [@jquass](https://github.com/jquass)
 
-## [0.3.15] - 2022-10-16
+## [0.3.15] - 2020-10-16
 ## Changed
 - Fix how ally code request bodies are formatted by [@jquass](https://github.com/jquass)
 - Fix CLIENT_REQUESTS_test by [@jquass](https://github.com/jquass)
 - Fix API_test by [@jquass](https://github.com/jquass)
 
-## [0.3.12] - 20202-10-16
+## [0.3.12] - 2020-10-16
 ## Changed
 - *Really* use https when making requests to auth/signin by [@jquass](https://github.com/jquass)
 
