@@ -5,8 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.3.10] - 2020-10-16
 ### Changed
-- Fixed CLIENT_AUTH_test
-- Secure requests with ally code
+- Fixed CLIENT_AUTH_test by [@jquass](https://github.com/jquass)
+- Secure requests with ally code by [@jquass](https://github.com/jquass)
 
 ## [0.3.8] - 2020-10-15
 ### Changed
