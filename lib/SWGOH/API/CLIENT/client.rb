@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'SWGOH/API'
+require 'uri'
 require 'net/http'
 require 'json'
 
@@ -28,7 +29,7 @@ class CLIENT
     form = auth_request_form(username, password)
     path = "https://#{SWGOH::API::PATH::BASE}/#{SWGOH::API::PATH::AUTH_SIGNIN}"
     res = Net::HTTP.post_form(URI(path), form)
-    return unless res.is_a?(Net::HTTPSuccess)
+    return log_error(res) unless res.is_a?(Net::HTTPSuccess)
 
     @access_token = JSON.parse(res.body)['access_token']
   end
@@ -91,15 +92,18 @@ class CLIENT
   def request(path, ally_codes)
     return unless authorized?
 
-    path = "https://#{SWGOH::API::PATH::BASE}/#{path}"
-    res = Net::HTTP.post(URI(path), request_data(ally_codes), auth_headers)
-    return unless res.is_a?(Net::HTTPSuccess)
+    uri = URI("https://#{SWGOH::API::PATH::BASE}/#{path}")
+    response = Net::HTTP.post(uri, request_data(ally_codes), request_headers)
+    return log_error(response) unless response.is_a?(Net::HTTPSuccess)
 
-    JSON.parse(res.body)
+    JSON.parse(response.body)
   end
 
-  def auth_headers
-    { Authorization: 'Bearer ' + @access_token }
+  def request_headers
+    {
+      Authorization: 'Bearer ' + @access_token,
+      'Content-Type': 'application/json;charset=utf-8'
+    }
   end
 
   def auth_request_form(username, password)
@@ -120,5 +124,10 @@ class CLIENT
       enums: enums,
       structure: structure
     }.to_json
+  end
+
+  def log_error(result)
+    puts result.inspect
+    puts result.body if result.is_a?(Net::HTTPResponse)
   end
 end

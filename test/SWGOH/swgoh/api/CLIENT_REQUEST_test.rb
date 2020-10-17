@@ -6,7 +6,7 @@ require 'SWGOH/API/CLIENT/client'
 
 class ClientRequestTest < Minitest::Test
   ACCESS_TOKEN = 'access-token'
-  ALLY_CODES = ['123456789'].freeze
+  ALLY_CODES = [123_456_789].freeze
   RESPONSE_JSON = '[{}]'
 
   def test_it_gets_players
@@ -87,8 +87,8 @@ class ClientRequestTest < Minitest::Test
     client
   end
 
-  def request_body(_ally_codes)
-    '{:allyCodes=>["123456789"], :language=>"ENG_US", :enums=>false, :structure=>false}'
+  def request_body(ally_codes)
+    "{\"allyCodes\":#{ally_codes},\"language\":\"ENG_US\",\"enums\":false,\"structure\":false}"
   end
 
   def request_headers
