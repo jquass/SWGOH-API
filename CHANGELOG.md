@@ -2,9 +2,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+N/A
+
+## [0.3.19] - 2020-10-16
 ## Changed
-- Set ally code request header type to json
-- Add request error logging
+- Set ally code request header type to json by [@jquass](https://github.com/jquass)
+- Add request error logging by [@jquass](https://github.com/jquass)
 
 ## [0.3.17] - 2020-10-16
 ## Changed
