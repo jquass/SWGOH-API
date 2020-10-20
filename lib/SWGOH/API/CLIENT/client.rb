@@ -88,7 +88,7 @@ class CLIENT
     return unless authorized?
 
     uri = URI("https://#{SWGOH::API::PATH::BASE}/#{path}")
-    response = Net::HTTP.post(uri, request_data, request_headers)
+    response = Net::HTTP.post(uri, request_data.to_json, request_headers)
     return log_error(response) unless response.is_a?(Net::HTTPSuccess)
 
     JSON.parse(response.body)
@@ -103,7 +103,7 @@ class CLIENT
     uri = URI("https://#{SWGOH::API::PATH::BASE}/#{path}")
     ally_code_request_data = request_data
     ally_code_request_data[:allyCodes] = ally_codes
-    response = Net::HTTP.post(uri, ally_code_request_data, request_headers)
+    response = Net::HTTP.post(uri, ally_code_request_data.to_json, request_headers)
     return log_error(response) unless response.is_a?(Net::HTTPSuccess)
 
     JSON.parse(response.body)
@@ -130,13 +130,13 @@ class CLIENT
     }
   end
 
-  # @return [JSON]
+  # @return [Hash]
   def request_data
     {
       language: language,
       enums: enums,
       structure: structure
-    }.to_json
+    }
   end
 
   def log_error(result)
