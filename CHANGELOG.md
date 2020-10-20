@@ -3,14 +3,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ## Changed
-- Removed ally_codes param from get_zetas and changed name to zetas
-- Removed ally_codes param from get_squads and changed name to squads
-- Removed ally_codes param from get_events and changed name to events
-- Removed ally_codes param from get_battles and changed name to battles
-- Renamed get_players to players
-- Renamed get_guilds to guilds
-- Renamed get_rosters to rosters
-- Renamed get_units to units
+- Removed ally_codes param from get_zetas and changed name to zetas by [@jquass](https://github.com/jquass)
+- Removed ally_codes param from get_squads and changed name to squads by [@jquass](https://github.com/jquass)
+- Removed ally_codes param from get_events and changed name to events by [@jquass](https://github.com/jquass)
+- Removed ally_codes param from get_battles and changed name to battles by [@jquass](https://github.com/jquass)
+- Renamed get_players to players by [@jquass](https://github.com/jquass)
+- Renamed get_guilds to guilds by [@jquass](https://github.com/jquass)
+- Renamed get_rosters to rosters by [@jquass](https://github.com/jquass)
+- Renamed get_units to units by [@jquass](https://github.com/jquass)
 
 ## [0.3.19] - 2020-10-16
 ## Changed
