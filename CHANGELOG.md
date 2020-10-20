@@ -2,7 +2,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-N/A
+## Changed
+- Removed ally_codes param from get_zetas and changed name to zetas
+- Removed ally_codes param from get_squads and changed name to squads
+- Removed ally_codes param from get_events and changed name to events
+- Removed ally_codes param from get_battles and changed name to battles
+- Renamed get_players to players
+- Renamed get_guilds to guilds
+- Renamed get_rosters to rosters
+- Renamed get_units to units
 
 ## [0.3.19] - 2020-10-16
 ## Changed
