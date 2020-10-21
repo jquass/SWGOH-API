@@ -78,6 +78,12 @@ class CLIENT
     request(SWGOH::API::PATH::BATTLES)
   end
 
+  # @param [SWGOH::API::PATH::COLLECTION] collection
+  # @return [JSON || nil]
+  def data(collection)
+    data_request(collection)
+  end
+
   private
 
   attr_reader :access_token
@@ -101,9 +107,23 @@ class CLIENT
     return unless authorized?
 
     uri = URI("https://#{SWGOH::API::PATH::BASE}/#{path}")
-    ally_code_request_data = request_data
-    ally_code_request_data[:allyCodes] = ally_codes
-    response = Net::HTTP.post(uri, ally_code_request_data.to_json, request_headers)
+    data = request_data
+    data[:allyCodes] = ally_codes
+    response = Net::HTTP.post(uri, data.to_json, request_headers)
+    return log_error(response) unless response.is_a?(Net::HTTPSuccess)
+
+    JSON.parse(response.body)
+  end
+
+  # @param [SWGOH::API::PATH::COLLECTION] collection
+  # @return [JSON || nil]
+  def data_request(collection)
+    return unless authorized?
+
+    uri = URI("https://#{SWGOH::API::PATH::BASE}/#{SWGOH::API::PATH::DATA}")
+    data = request_data
+    data[:collection] = collection
+    response = Net::HTTP.post(uri, data.to_json, request_headers)
     return log_error(response) unless response.is_a?(Net::HTTPSuccess)
 
     JSON.parse(response.body)
