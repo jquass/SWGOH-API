@@ -10,33 +10,33 @@ class ClientRequestTest < Minitest::Test
   RESPONSE_JSON = '[{}]'
 
   def test_it_gets_players
-    mock_request(SWGOH::API::PATH::PLAYER)
+    mock_ally_code_request(SWGOH::API::PATH::PLAYER)
 
-    players = authenticated_client.get_players(ALLY_CODES)
+    players = authenticated_client.players(ALLY_CODES)
 
     assert_equal JSON.parse(RESPONSE_JSON), players
   end
 
   def test_it_gets_guilds
-    mock_request(SWGOH::API::PATH::GUILD)
+    mock_ally_code_request(SWGOH::API::PATH::GUILD)
 
-    guilds = authenticated_client.get_guilds(ALLY_CODES)
+    guilds = authenticated_client.guilds(ALLY_CODES)
 
     assert_equal JSON.parse(RESPONSE_JSON), guilds
   end
 
   def test_it_gets_rosters
-    mock_request(SWGOH::API::PATH::ROSTER)
+    mock_ally_code_request(SWGOH::API::PATH::ROSTER)
 
-    rosters = authenticated_client.get_rosters(ALLY_CODES)
+    rosters = authenticated_client.rosters(ALLY_CODES)
 
     assert_equal JSON.parse(RESPONSE_JSON), rosters
   end
 
   def test_it_gets_units
-    mock_request(SWGOH::API::PATH::UNITS)
+    mock_ally_code_request(SWGOH::API::PATH::UNITS)
 
-    units = authenticated_client.get_units(ALLY_CODES)
+    units = authenticated_client.units(ALLY_CODES)
 
     assert_equal JSON.parse(RESPONSE_JSON), units
   end
@@ -44,7 +44,7 @@ class ClientRequestTest < Minitest::Test
   def test_it_gets_zetas
     mock_request(SWGOH::API::PATH::ZETAS)
 
-    zetas = authenticated_client.get_zetas(ALLY_CODES)
+    zetas = authenticated_client.zetas
 
     assert_equal JSON.parse(RESPONSE_JSON), zetas
   end
@@ -52,7 +52,7 @@ class ClientRequestTest < Minitest::Test
   def test_it_gets_squads
     mock_request(SWGOH::API::PATH::SQUADS)
 
-    squads = authenticated_client.get_squads(ALLY_CODES)
+    squads = authenticated_client.squads
 
     assert_equal JSON.parse(RESPONSE_JSON), squads
   end
@@ -60,7 +60,7 @@ class ClientRequestTest < Minitest::Test
   def test_it_gets_events
     mock_request(SWGOH::API::PATH::EVENTS)
 
-    events = authenticated_client.get_events(ALLY_CODES)
+    events = authenticated_client.events
 
     assert_equal JSON.parse(RESPONSE_JSON), events
   end
@@ -68,7 +68,7 @@ class ClientRequestTest < Minitest::Test
   def test_it_gets_battles
     mock_request(SWGOH::API::PATH::BATTLES)
 
-    battles = authenticated_client.get_battles(ALLY_CODES)
+    battles = authenticated_client.battles
 
     assert_equal JSON.parse(RESPONSE_JSON), battles
   end
@@ -77,7 +77,15 @@ class ClientRequestTest < Minitest::Test
 
   def mock_request(path)
     WebMock.stub_request(:post, 'https://api.swgoh.help/' + path)
-           .with(body: request_body(ALLY_CODES), headers: request_headers)
+           .with(body: request_body, headers: request_headers)
+           .to_return(status: 200, body: RESPONSE_JSON, headers: {})
+  end
+
+  def mock_ally_code_request(path)
+    ally_code_request_data = request_body
+    ally_code_request_data[:allyCodes] = ALLY_CODES
+    WebMock.stub_request(:post, 'https://api.swgoh.help/' + path)
+           .with(body: ally_code_request_data, headers: request_headers)
            .to_return(status: 200, body: RESPONSE_JSON, headers: {})
   end
 
@@ -87,8 +95,12 @@ class ClientRequestTest < Minitest::Test
     client
   end
 
-  def request_body(ally_codes)
-    "{\"allyCodes\":#{ally_codes},\"language\":\"ENG_US\",\"enums\":false,\"structure\":false}"
+  def request_body
+    {
+      language: 'ENG_US',
+      enums: false,
+      structure: false
+    }
   end
 
   def request_headers

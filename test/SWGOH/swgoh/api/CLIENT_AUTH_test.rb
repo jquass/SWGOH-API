@@ -50,7 +50,7 @@ class ClientAuthTest < Minitest::Test
   def test_it_gets_nil_unauthed
     client = CLIENT.new
 
-    players = client.get_players(ALLY_CODES)
+    players = client.players(ALLY_CODES)
 
     assert_nil players
   end
