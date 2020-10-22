@@ -61,7 +61,7 @@ module SWGOH
       STARTER_GUILD = 'starterGuildList'
       STAT_MOD = 'statModList'
       STAT_MOD_SET = 'statModSetList'
-      STAT_PROGRESSION_LIST = 'statProgressionList'
+      STAT_PROGRESSION = 'statProgressionList'
       TABLE = 'tableList'
       TARGETING_SET = 'targetingSetList'
       TERRITORY_BATTLE_DEFINITION = 'territoryBattleDefinitionList'
