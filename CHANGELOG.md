@@ -2,6 +2,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.4.0] - 2020-10-16
 ## Added
 - Added methods to make requests to the data endpoint by [@jquass](https://github.com/jquass)
 - Added client data endpoint unit tests by [@jquass](https://github.com/jquass)
