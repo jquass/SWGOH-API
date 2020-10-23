@@ -124,7 +124,7 @@ class CLIENT
   end
 
   # @return [JSON || nil]
-  def battle_event_samples
+  def event_samples
     data_request(SWGOH::API::COLLECTION::EVENT_SAMPLING)
   end
 
