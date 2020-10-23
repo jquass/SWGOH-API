@@ -5,6 +5,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Added
 - Added methods to make requests to the data endpoint by [@jquass](https://github.com/jquass)
 - Added client data endpoint unit tests by [@jquass](https://github.com/jquass)
+- Added project param by [@jquass](https://github.com/jquass)
 ## Changed
 - Removed ally_codes param from get_zetas and changed name to zetas by [@jquass](https://github.com/jquass)
 - Removed ally_codes param from get_squads and changed name to squads by [@jquass](https://github.com/jquass)

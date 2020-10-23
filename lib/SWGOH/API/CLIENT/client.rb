@@ -7,7 +7,7 @@ require 'json'
 
 # The CLIENT class makes requests to api.swgoh.api
 class CLIENT
-  attr_accessor :language, :enums, :structure
+  attr_accessor :language, :enums, :structure, :project
   attr_writer :access_token
 
   def initialize
@@ -15,6 +15,7 @@ class CLIENT
     @enums = false
     @structure = false
     @access_token = nil
+    @project = nil
   end
 
   # @return [Boolean]
@@ -248,7 +249,9 @@ class CLIENT
     return unless authorized?
 
     uri = URI("https://#{SWGOH::API::PATH::BASE}/#{path}")
-    response = Net::HTTP.post(uri, request_data.to_json, request_headers)
+    data = request_data
+    data[:project] = @project unless @project.nil?
+    response = Net::HTTP.post(uri, data.to_json, request_headers)
     return log_error(response) unless response.is_a?(Net::HTTPSuccess)
 
     JSON.parse(response.body)
@@ -263,6 +266,7 @@ class CLIENT
     uri = URI("https://#{SWGOH::API::PATH::BASE}/#{path}")
     data = request_data
     data[:allyCodes] = ally_codes
+    data[:project] = @project unless @project.nil?
     response = Net::HTTP.post(uri, data.to_json, request_headers)
     return log_error(response) unless response.is_a?(Net::HTTPSuccess)
 
@@ -277,6 +281,7 @@ class CLIENT
     uri = URI("https://#{SWGOH::API::PATH::BASE}/#{SWGOH::API::PATH::DATA}")
     data = request_data
     data[:collection] = collection
+    data[:project] = @project unless @project.nil?
     response = Net::HTTP.post(uri, data.to_json, request_headers)
     return log_error(response) unless response.is_a?(Net::HTTPSuccess)
 
