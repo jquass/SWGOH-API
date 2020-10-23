@@ -33,13 +33,15 @@ json = client.get_players([123456789])
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests.
+After checking out the repo, run `bin/setup` to install dependencies.
 
-To install this gem onto your local machine, run `gem install 'SWGOH-API'`. 
+To build your changes, run `gem build SWGOH-API.gemspec`
+
+To install the build onto your local machine, run `gem install 'SWGOH-API'`. 
 
 ### irb
 ```
-$ irb -rubygems               
+$ irb
 irb(main):001:0> require 'SWGOH/API/CLIENT/client'
 => true
 irb(main):002:0> client = CLIENT.new
@@ -52,15 +54,19 @@ irb(main):005:0> client.authorized?
 => true
 ```
 
+### Unit Tests
+
+Run `rake test` to run the unit tests.
+
 ### Release
 These are the steps to create and tag a new version, push git commits and tags, and push the new gem version to [rubygems.org](https://rubygems.org).
 
 - Update the CHANGELOG and assign version number
 - Update the version number in `version.rb`
-- Run `gem build SWGOH-API.gemspec`
-- Run the release to generate all files `bundle exec rake release`  
+- Run `gem build SWGOH-API.gemspec` to build the new gem version
+- Run the release once to generate all files to commit `bundle exec rake release`  
 - Create a new version commit with all changes
-- Release the new version `bundle exec rake release` 
+- Release the new version `bundle exec rake release`
 
 ## Contributing
 
