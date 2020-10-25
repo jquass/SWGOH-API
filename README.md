@@ -3,15 +3,17 @@ Ruby client wrapper for the API at https://api.swgoh.help .
 
 ### Installation
 
-Add this line to your application's Gemfile:
+Gemfile:
 
 ```ruby
-gem 'SWGOH-API'
+gem 'SWGOH-API', '~> 0.4.0'
 ```
 
-And then rake:
+Install:
 
-    $ bundle exec rake
+```ruby
+gem install SWGOH-API
+```
 
 ## Usage
 ```ruby
