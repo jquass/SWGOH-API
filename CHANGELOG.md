@@ -3,9 +3,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ## Added
-- Added param Hash to methods
-- Added LOG helper class
-- Added Requester class
+- Added param Hash to methods by [@jquass](https://github.com/jquass)
+- Added LOG helper class by [@jquass](https://github.com/jquass)
+- Added Requester class by [@jquass](https://github.com/jquass)
 
 ## [0.4.0] - 2020-10-16
 ## Added
