@@ -6,7 +6,7 @@ Ruby client wrapper for the API at https://api.swgoh.help .
 Gemfile:
 
 ```ruby
-gem 'SWGOH-API', '~> 0.4.0'
+gem 'SWGOH-API', '~> 1.0.0'
 ```
 
 Install:
@@ -64,7 +64,7 @@ Run `rake test` to run the unit tests.
 These are the steps to create and tag a new version, push git commits and tags, and push the new gem version to [rubygems.org](https://rubygems.org).
 
 - Update the CHANGELOG and assign version number
-- Update the version number in `version.rb`
+- Update the version number in `version.rb`, and the README.md
 - Run `gem build SWGOH-API.gemspec` to build the new gem version
 - Run the release once to generate all files to commit `bundle exec rake release`  
 - Create a new version commit with all changes
