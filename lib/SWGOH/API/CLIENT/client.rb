@@ -1,21 +1,15 @@
 # frozen_string_literal: true
 
 require 'SWGOH/API'
-require 'uri'
-require 'net/http'
-require 'json'
+require 'SWGOH/API/CLIENT/requester'
 
 # The CLIENT class makes requests to api.swgoh.api
 class CLIENT
-  attr_accessor :language, :enums, :structure, :project
-  attr_writer :access_token
+  attr_writer :access_token, :requester
 
   def initialize
-    @language = SWGOH::API::LANGUAGE::ENG_US
-    @enums = false
-    @structure = false
     @access_token = nil
-    @project = nil
+    @requester = REQUESTER.new
   end
 
   # @return [Boolean]
@@ -27,299 +21,279 @@ class CLIENT
   # @param [String] password
   # @return [String | nil]
   def authorize(username, password)
-    form = auth_request_form(username, password)
-    path = "https://#{SWGOH::API::PATH::BASE}/#{SWGOH::API::PATH::AUTH_SIGNIN}"
-    res = Net::HTTP.post_form(URI(path), form)
-    return log_error(res) unless res.is_a?(Net::HTTPSuccess)
-
-    @access_token = JSON.parse(res.body)['access_token']
+    response = @requester.auth_request(username, password)
+    @access_token = response['access_token'] unless response.nil?
   end
 
   # @param [Array] ally_codes
+  # @param [Hash] params
   # @return [JSON || nil]
-  def players(ally_codes)
-    ally_codes_request(SWGOH::API::PATH::PLAYER, ally_codes)
+  def players(ally_codes, params = {})
+    ally_codes_request(SWGOH::API::PATH::PLAYER, ally_codes, params)
   end
 
   # @param [Array] ally_codes
+  # @param [Hash] params
   # @return [JSON || nil]
-  def guilds(ally_codes)
-    ally_codes_request(SWGOH::API::PATH::GUILD, ally_codes)
+  def guilds(ally_codes, params = {})
+    ally_codes_request(SWGOH::API::PATH::GUILD, ally_codes, params)
   end
 
   # @param [Array] ally_codes
+  # @param [Hash] params
   # @return [JSON || nil]
-  def rosters(ally_codes)
-    ally_codes_request(SWGOH::API::PATH::ROSTER, ally_codes)
+  def rosters(ally_codes, params = {})
+    ally_codes_request(SWGOH::API::PATH::ROSTER, ally_codes, params)
   end
 
   # @param [Array] ally_codes
+  # @param [Hash] params
   # @return [JSON || nil]
-  def units(ally_codes)
-    ally_codes_request(SWGOH::API::PATH::UNITS, ally_codes)
+  def units(ally_codes, params = {})
+    ally_codes_request(SWGOH::API::PATH::UNITS, ally_codes, params)
   end
 
+  # @param [Hash] params
   # @return [JSON || nil]
-  def zetas
-    request(SWGOH::API::PATH::ZETAS)
+  def zetas(params = {})
+    request(SWGOH::API::PATH::ZETAS, params)
   end
 
+  # @param [Hash] params
   # @return [JSON || nil]
-  def squads
-    request(SWGOH::API::PATH::SQUADS)
+  def squads(params = {})
+    request(SWGOH::API::PATH::SQUADS, params)
   end
 
+  # @param [Hash] params
   # @return [JSON || nil]
-  def events
-    request(SWGOH::API::PATH::EVENTS)
+  def events(params = {})
+    request(SWGOH::API::PATH::EVENTS, params)
   end
 
+  # @param [Hash] params
   # @return [JSON || nil]
-  def battles
-    request(SWGOH::API::PATH::BATTLES)
+  def battles(params = {})
+    request(SWGOH::API::PATH::BATTLES, params)
   end
 
+  # @param [Hash] params
   # @return [JSON || nil]
-  def abilities
-    data_request(SWGOH::API::COLLECTION::ABILITY)
+  def abilities(params = {})
+    data_collection_request(SWGOH::API::COLLECTION::ABILITY, params)
   end
 
+  # @param [Hash] params
   # @return [JSON || nil]
-  def battle_environments
-    data_request(SWGOH::API::COLLECTION::BATTLE_ENVIRONMENT)
+  def battle_environments(params = {})
+    data_collection_request(SWGOH::API::COLLECTION::BATTLE_ENVIRONMENT, params)
   end
 
+  # @param [Hash] params
   # @return [JSON || nil]
-  def battle_targeting_rules
-    data_request(SWGOH::API::COLLECTION::BATTLE_TARGETING_RULE)
+  def battle_targeting_rules(params = {})
+    data_collection_request(SWGOH::API::COLLECTION::BATTLE_TARGETING_RULE, params)
   end
 
+  # @param [Hash] params
   # @return [JSON || nil]
-  def categories
-    data_request(SWGOH::API::COLLECTION::CATEGORY)
+  def categories(params = {})
+    data_collection_request(SWGOH::API::COLLECTION::CATEGORY, params)
   end
 
+  # @param [Hash] params
   # @return [JSON || nil]
-  def challenges
-    data_request(SWGOH::API::COLLECTION::CHALLENGE)
+  def challenges(params = {})
+    data_collection_request(SWGOH::API::COLLECTION::CHALLENGE, params)
   end
 
+  # @param [Hash] params
   # @return [JSON || nil]
-  def challenge_styles
-    data_request(SWGOH::API::COLLECTION::CHALLENGE_STYLE)
+  def challenge_styles(params = {})
+    data_collection_request(SWGOH::API::COLLECTION::CHALLENGE_STYLE, params)
   end
 
+  # @param [Hash] params
   # @return [JSON || nil]
-  def effects
-    data_request(SWGOH::API::COLLECTION::EFFECT)
+  def effects(params = {})
+    data_collection_request(SWGOH::API::COLLECTION::EFFECT, params)
   end
 
+  # @param [Hash] params
   # @return [JSON || nil]
-  def environment_collections
-    data_request(SWGOH::API::COLLECTION::ENVIRONMENT_COLLECTION)
+  def environment_collections(params = {})
+    data_collection_request(SWGOH::API::COLLECTION::ENVIRONMENT_COLLECTION, params)
   end
 
+  # @param [Hash] params
   # @return [JSON || nil]
-  def equipment
-    data_request(SWGOH::API::COLLECTION::EQUIPMENT)
+  def equipment(params = {})
+    data_collection_request(SWGOH::API::COLLECTION::EQUIPMENT, params)
   end
 
+  # @param [Hash] params
   # @return [JSON || nil]
-  def event_samples
-    data_request(SWGOH::API::COLLECTION::EVENT_SAMPLING)
+  def event_samples(params = {})
+    data_collection_request(SWGOH::API::COLLECTION::EVENT_SAMPLING, params)
   end
 
+  # @param [Hash] params
   # @return [JSON || nil]
-  def guild_exchange_items
-    data_request(SWGOH::API::COLLECTION::GUILD_EXCHANGE_ITEM)
+  def guild_exchange_items(params = {})
+    data_collection_request(SWGOH::API::COLLECTION::GUILD_EXCHANGE_ITEM, params)
   end
 
+  # @param [Hash] params
   # @return [JSON || nil]
-  def guild_raids
-    data_request(SWGOH::API::COLLECTION::GUILD_RAID)
+  def guild_raids(params = {})
+    data_collection_request(SWGOH::API::COLLECTION::GUILD_RAID, params)
   end
 
+  # @param [Hash] params
   # @return [JSON || nil]
-  def help_entries
-    data_request(SWGOH::API::COLLECTION::HELP_ENTRY)
+  def help_entries(params = {})
+    data_collection_request(SWGOH::API::COLLECTION::HELP_ENTRY, params)
   end
 
+  # @param [Hash] params
   # @return [JSON || nil]
-  def materials
-    data_request(SWGOH::API::COLLECTION::MATERIAL)
+  def materials(params = {})
+    data_collection_request(SWGOH::API::COLLECTION::MATERIAL, params)
   end
 
+  # @param [Hash] params
   # @return [JSON || nil]
-  def player_titles
-    data_request(SWGOH::API::COLLECTION::PLAYER_TITLE)
+  def player_titles(params = {})
+    data_collection_request(SWGOH::API::COLLECTION::PLAYER_TITLE, params)
   end
 
+  # @param [Hash] params
   # @return [JSON || nil]
-  def power_up_bundles
-    data_request(SWGOH::API::COLLECTION::POWER_UP_BUNDLE)
+  def power_up_bundles(params = {})
+    data_collection_request(SWGOH::API::COLLECTION::POWER_UP_BUNDLE, params)
   end
 
+  # @param [Hash] params
   # @return [JSON || nil]
-  def raid_configs
-    data_request(SWGOH::API::COLLECTION::RAID_CONFIG)
+  def raid_configs(params = {})
+    data_collection_request(SWGOH::API::COLLECTION::RAID_CONFIG, params)
   end
 
+  # @param [Hash] params
   # @return [JSON || nil]
-  def recipes
-    data_request(SWGOH::API::COLLECTION::RECIPE)
+  def recipes(params = {})
+    data_collection_request(SWGOH::API::COLLECTION::RECIPE, params)
   end
 
+  # @param [Hash] params
   # @return [JSON || nil]
-  def requirements
-    data_request(SWGOH::API::COLLECTION::REQUIREMENT)
+  def requirements(params = {})
+    data_collection_request(SWGOH::API::COLLECTION::REQUIREMENT, params)
   end
 
+  # @param [Hash] params
   # @return [JSON || nil]
-  def skills
-    data_request(SWGOH::API::COLLECTION::SKILL)
+  def skills(params = {})
+    data_collection_request(SWGOH::API::COLLECTION::SKILL, params)
   end
 
+  # @param [Hash] params
   # @return [JSON || nil]
-  def starter_guilds
-    data_request(SWGOH::API::COLLECTION::STARTER_GUILD)
+  def starter_guilds(params = {})
+    data_collection_request(SWGOH::API::COLLECTION::STARTER_GUILD, params)
   end
 
+  # @param [Hash] params
   # @return [JSON || nil]
-  def stat_mods
-    data_request(SWGOH::API::COLLECTION::STAT_MOD)
+  def stat_mods(params = {})
+    data_collection_request(SWGOH::API::COLLECTION::STAT_MOD, params)
   end
 
+  # @param [Hash] params
   # @return [JSON || nil]
-  def stat_mod_sets
-    data_request(SWGOH::API::COLLECTION::STAT_MOD_SET)
+  def stat_mod_sets(params = {})
+    data_collection_request(SWGOH::API::COLLECTION::STAT_MOD_SET, params)
   end
 
+  # @param [Hash] params
   # @return [JSON || nil]
-  def stat_progressions
-    data_request(SWGOH::API::COLLECTION::STAT_PROGRESSION)
+  def stat_progressions(params = {})
+    data_collection_request(SWGOH::API::COLLECTION::STAT_PROGRESSION, params)
   end
 
+  # @param [Hash] params
   # @return [JSON || nil]
-  def tables
-    data_request(SWGOH::API::COLLECTION::TABLE)
+  def tables(params = {})
+    data_collection_request(SWGOH::API::COLLECTION::TABLE, params)
   end
 
+  # @param [Hash] params
   # @return [JSON || nil]
-  def targeting_sets
-    data_request(SWGOH::API::COLLECTION::TARGETING_SET)
+  def targeting_sets(params = {})
+    data_collection_request(SWGOH::API::COLLECTION::TARGETING_SET, params)
   end
 
+  # @param [Hash] params
   # @return [JSON || nil]
-  def territory_battle_definitions
-    data_request(SWGOH::API::COLLECTION::TERRITORY_BATTLE_DEFINITION)
+  def territory_battle_definitions(params = {})
+    data_collection_request(SWGOH::API::COLLECTION::TERRITORY_BATTLE_DEFINITION, params)
   end
 
+  # @param [Hash] params
   # @return [JSON || nil]
-  def territory_war_definitions
-    data_request(SWGOH::API::COLLECTION::TERRITORY_WAR_DEFINITION)
+  def territory_war_definitions(params = {})
+    data_collection_request(SWGOH::API::COLLECTION::TERRITORY_WAR_DEFINITION, params)
   end
 
+  # @param [Hash] params
   # @return [JSON || nil]
-  def units_list
-    data_request(SWGOH::API::COLLECTION::UNIT)
+  def units_list(params = {})
+    data_collection_request(SWGOH::API::COLLECTION::UNIT, params)
   end
 
+  # @param [Hash] params
   # @return [JSON || nil]
-  def unlock_announcement_defs
-    data_request(SWGOH::API::COLLECTION::UNLOCK_ANNOUNCEMENT_DEFINITION)
+  def unlock_announcement_defs(params = {})
+    data_collection_request(SWGOH::API::COLLECTION::UNLOCK_ANNOUNCEMENT_DEFINITION, params)
   end
 
+  # @param [Hash] params
   # @return [JSON || nil]
-  def war_definitions
-    data_request(SWGOH::API::COLLECTION::WAR_DEFINITION)
+  def war_definitions(params = {})
+    data_collection_request(SWGOH::API::COLLECTION::WAR_DEFINITION, params)
   end
 
+  # @param [Hash] params
   # @return [JSON || nil]
-  def xp_tables
-    data_request(SWGOH::API::COLLECTION::XP_TABLE)
+  def xp_tables(params = {})
+    data_collection_request(SWGOH::API::COLLECTION::XP_TABLE, params)
   end
 
   private
 
-  attr_reader :access_token
+  attr_reader :access_token, :requester
 
   # @param [PATH] path
+  # @param [Hash] params
   # @return [JSON || nil]
-  def request(path)
+  def request(path, params = {})
     return unless authorized?
 
-    uri = URI("https://#{SWGOH::API::PATH::BASE}/#{path}")
-    data = request_data
-    data[:project] = @project unless @project.nil?
-    response = Net::HTTP.post(uri, data.to_json, request_headers)
-    return log_error(response) unless response.is_a?(Net::HTTPSuccess)
-
-    JSON.parse(response.body)
+    @requester.request(@access_token, path, params)
   end
 
   # @param [PATH] path
   # @param [Array] ally_codes
+  # @param [Hash] params
   # @return [JSON || nil]
-  def ally_codes_request(path, ally_codes)
-    return unless authorized?
-
-    uri = URI("https://#{SWGOH::API::PATH::BASE}/#{path}")
-    data = request_data
-    data[:allyCodes] = ally_codes
-    data[:project] = @project unless @project.nil?
-    response = Net::HTTP.post(uri, data.to_json, request_headers)
-    return log_error(response) unless response.is_a?(Net::HTTPSuccess)
-
-    JSON.parse(response.body)
+  def ally_codes_request(path, ally_codes, params = {})
+    request(path, params.merge({ allyCodes: ally_codes }))
   end
 
   # @param [SWGOH::API::PATH::COLLECTION] collection
+  # @param [Hash] params
   # @return [JSON || nil]
-  def data_request(collection)
-    return unless authorized?
-
-    uri = URI("https://#{SWGOH::API::PATH::BASE}/#{SWGOH::API::PATH::DATA}")
-    data = request_data
-    data[:collection] = collection
-    data[:project] = @project unless @project.nil?
-    response = Net::HTTP.post(uri, data.to_json, request_headers)
-    return log_error(response) unless response.is_a?(Net::HTTPSuccess)
-
-    JSON.parse(response.body)
-  end
-
-  # @return [Hash]
-  def request_headers
-    {
-      Authorization: 'Bearer ' + @access_token,
-      'Content-Type': 'application/json;charset=utf-8'
-    }
-  end
-
-  # @param [String]  username
-  # @param [String] password
-  # @return [Hash]
-  def auth_request_form(username, password)
-    {
-      username: username,
-      password: password,
-      grant_type: 'password',
-      client_id: 123,
-      client_secret: 'abc'
-    }
-  end
-
-  # @return [Hash]
-  def request_data
-    {
-      language: language,
-      enums: enums,
-      structure: structure
-    }
-  end
-
-  def log_error(result)
-    puts result.inspect
-    puts result.body if result.is_a?(Net::HTTPResponse)
+  def data_collection_request(collection, params = {})
+    request(SWGOH::API::PATH::DATA, params.merge({ collection: collection }))
   end
 end
