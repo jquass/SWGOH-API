@@ -29,7 +29,7 @@ class REQUESTER
   # @param [Hash] data
   # @return [JSON || nil]
   def request(access_token, path, data)
-    response = Net::HTTP.post(uri(path), data.to_json, request_headers(access_token))
+    response = Net::HTTP.post(uri(path), default_data.merge(data).to_json, request_headers(access_token))
     return @log.error(response) unless response.is_a?(Net::HTTPSuccess)
 
     JSON.parse(response.body)
@@ -60,6 +60,15 @@ class REQUESTER
     {
       Authorization: 'Bearer ' + access_token,
       'Content-Type': 'application/json;charset=utf-8'
+    }
+  end
+
+  # @return [Hash]
+  def default_data
+    {
+      language: SWGOH::API::LANGUAGE::ENG_US,
+      enums: false,
+      structure: false
     }
   end
 end

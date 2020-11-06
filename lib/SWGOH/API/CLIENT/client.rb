@@ -279,11 +279,7 @@ class CLIENT
   def request(path, params = {})
     return unless authorized?
 
-    @requester.request(
-      @access_token,
-      path,
-      default_data.merge(params)
-    )
+    @requester.request(@access_token, path, params)
   end
 
   # @param [PATH] path
@@ -291,34 +287,13 @@ class CLIENT
   # @param [Hash] params
   # @return [JSON || nil]
   def ally_codes_request(path, ally_codes, params = {})
-    return unless authorized?
-
-    @requester.request(
-      @access_token,
-      path,
-      default_data.merge({ allyCodes: ally_codes }).merge(params)
-    )
+    request(path, params.merge({ allyCodes: ally_codes }))
   end
 
   # @param [SWGOH::API::PATH::COLLECTION] collection
   # @param [Hash] params
   # @return [JSON || nil]
   def data_collection_request(collection, params = {})
-    return unless authorized?
-
-    @requester.request(
-      @access_token,
-      SWGOH::API::PATH::DATA,
-      default_data.merge({ collection: collection }).merge(params)
-    )
-  end
-
-  # @return [Hash]
-  def default_data
-    {
-      language: SWGOH::API::LANGUAGE::ENG_US,
-      enums: false,
-      structure: false
-    }
+    request(SWGOH::API::PATH::DATA, params.merge({ collection: collection }))
   end
 end
